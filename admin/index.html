@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Admin — Claws by Kait</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --ink: #141414;
+      --panel: #1a1a1a;
+      --bone: #e8e3da;
+      --bone-dim: #c9c3b9;
+      --rose: #8b3a4a;
+      --rose-light: #b05060;
+      --silver: #9a9590;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--bone);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    #login-screen {
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    #login-screen.active { display: flex; }
+
+    .login-title {
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: 2.8rem;
+      color: var(--bone);
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+
+    .login-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--silver);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 360px;
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.12);
+      padding: 2.5rem;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 0.6rem;
+    }
+
+    .field-input {
+      width: 100%;
+      background: var(--black);
+      border: 0.5px solid rgba(232,227,218,0.2);
+      color: var(--bone);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+    .field-input:focus { border-color: var(--rose); }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      background: var(--rose);
+      color: var(--bone);
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--rose-light); }
+    .btn:active { opacity: 0.9; }
+
+    .btn.ghost {
+      background: transparent;
+      border: 0.5px solid rgba(232,227,218,0.18);
+      color: var(--bone-dim);
+      margin-top: 0.75rem;
+    }
+    .btn.ghost:hover { border-color: var(--rose); color: var(--bone); }
+
+    .login-error {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #e07070;
+      text-align: center;
+      min-height: 1.2rem;
+    }
+
+    #admin-screen {
+      display: none;
+      padding: 2rem 1.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 0.5px solid rgba(232,227,218,0.12);
+      margin-bottom: 2rem;
+    }
+
+    .admin-header h1 {
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: 1.6rem;
+    }
+
+    .logout-btn {
+      background: none;
+      border: 0.5px solid rgba(232,227,218,0.18);
+      color: var(--silver);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .logout-btn:hover { color: var(--bone); border-color: var(--bone-dim); }
+
+    .upload-zone {
+      border: 1px dashed rgba(232,227,218,0.18);
+      background: var(--panel);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .upload-zone.drag-over {
+      border-color: var(--rose);
+      background: rgba(139,58,74,0.08);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .upload-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .upload-zone p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--bone-dim);
+      font-size: 1.1rem;
+    }
+    .upload-zone small {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--silver);
+    }
+
+    .queue-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 1rem;
+    }
+
+    .queue-item {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 0.5px solid rgba(232,227,218,0.08);
+    }
+
+    .queue-thumb {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      display: block;
+      background: var(--ink);
+    }
+
+    .queue-info .filename {
+      font-size: 0.82rem;
+      color: var(--bone);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+    }
+    .queue-info .status {
+      font-size: 0.72rem;
+      color: var(--silver);
+      margin-top: 0.2rem;
+    }
+    .queue-info .status.done      { color: #6ab07a; }
+    .queue-info .status.fail      { color: #e07070; }
+    .queue-info .status.uploading { color: var(--bone-dim); }
+
+    .progress-bar { height: 2px; background: rgba(232,227,218,0.1); margin-top: 0.4rem; }
+    .progress-fill { height: 100%; background: var(--rose); width: 0%; transition: width 0.2s; }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--silver);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+    .remove-btn:hover { color: #e07070; }
+
+    .section-divider {
+      border: none;
+      border-top: 0.5px solid rgba(232,227,218,0.12);
+      margin: 2.5rem 0;
+    }
+
+    .manage-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .manage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    .manage-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .manage-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.7);
+      transition: filter 0.3s;
+    }
+    .manage-item:hover img { filter: saturate(1); }
+    .manage-item .del-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(10,10,10,0.85);
+      border: 0.5px solid #e07070;
+      color: #e07070;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .manage-item:hover .del-btn { opacity: 1; }
+
+    .empty-msg {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 2rem;
+      color: var(--silver);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.2);
+      color: var(--bone);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      padding: 0.85rem 1.75rem;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 999;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div id="login-screen" class="active">
+    <h1 class="login-title">Claws by Kait</h1>
+    <p class="login-sub">Admin Portal</p>
+    <div class="login-box">
+      <label class="field-label" for="email">Email</label>
+      <input class="field-input" type="email" id="email" autocomplete="email" placeholder="kait@example.com" />
+      <label class="field-label" for="pwd">Password</label>
+      <input class="field-input" type="password" id="pwd" autocomplete="current-password" placeholder="••••••••" />
+      <button class="btn" id="login-btn">Enter</button>
+      <p class="login-error" id="login-error"></p>
+    </div>
+  </div>
+
+  <div id="admin-screen">
+    <div class="admin-header">
+      <h1>Claws by Kait</h1>
+      <button class="logout-btn" id="logout-btn">Log Out</button>
+    </div>
+
+    <div class="upload-zone" id="drop-zone">
+      <input type="file" id="file-input" accept="image/*" multiple />
+      <div class="upload-icon">✦</div>
+      <p>Tap to add photos</p>
+      <small>or drag & drop · JPG, PNG, WEBP</small>
+    </div>
+
+    <button class="btn" id="upload-btn" style="display:none;">Upload All Photos</button>
+    <div id="queue" style="margin-bottom:2rem;"></div>
+
+    <hr class="section-divider" />
+    <h2 class="manage-title">Current Gallery</h2>
+    <div class="manage-grid" id="manage-grid">
+      <div class="empty-msg">Loading…</div>
+    </div>
+
+    <hr class="section-divider" />
+    <a href="../index.html" class="btn ghost" style="display:block; text-align:center;">← View Public Site</a>
+  </div>
+
+  <div id="toast"></div>
+
+  <script type="module">
+    import { initializeApp }   from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+                               from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js';
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, serverTimestamp }
+                               from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
+    import { FIREBASE_CONFIG } from '../firebase-config.js';
+
+    // ── CONFIG ──
+    const CLOUDINARY_CLOUD  = 'dg8obfrev';
+    const CLOUDINARY_PRESET = 'claws_gallery';
+
+    // ── INIT FIREBASE ──
+    const app  = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    // ── AUTH STATE ──
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        document.getElementById('login-screen').classList.remove('active');
+        document.getElementById('admin-screen').style.display = 'block';
+        loadManageGallery();
+      } else {
+        document.getElementById('login-screen').classList.add('active');
+        document.getElementById('admin-screen').style.display = 'none';
+      }
+    });
+
+    // ── LOGIN ──
+    document.getElementById('login-btn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+      const pwd   = document.getElementById('pwd').value;
+      const errEl = document.getElementById('login-error');
+      errEl.textContent = '';
+      if (!email || !pwd) { errEl.textContent = 'Please enter your email and password.'; return; }
+      try {
+        await signInWithEmailAndPassword(auth, email, pwd);
+      } catch (e) {
+        errEl.textContent = 'Incorrect email or password.';
+      }
+    });
+
+    document.getElementById('pwd').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('login-btn').click();
+    });
+
+    // ── LOGOUT ──
+    document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+
+    // ── FILE QUEUE ──
+    let fileQueue = [];
+
+    const fileInput = document.getElementById('file-input');
+    const dropZone  = document.getElementById('drop-zone');
+
+    fileInput.addEventListener('change', e => addFiles(Array.from(e.target.files)));
+
+    dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      addFiles(Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')));
+    });
+
+    function addFiles(files) {
+      files.forEach(file => {
+        if (fileQueue.find(f => f.file.name === file.name && f.file.size === file.size)) return;
+        fileQueue.push({ file, status: 'pending', progress: 0, id: crypto.randomUUID() });
+      });
+      renderQueue();
+      document.getElementById('upload-btn').style.display = fileQueue.length ? 'block' : 'none';
+    }
+
+    function renderQueue() {
+      const container = document.getElementById('queue');
+      if (!fileQueue.length) { container.innerHTML = ''; return; }
+
+      container.innerHTML =
+        `<p class="queue-title">${fileQueue.length} photo${fileQueue.length !== 1 ? 's' : ''} ready</p>` +
+        fileQueue.map(item => `
+          <div class="queue-item" id="qi-${item.id}">
+            <img class="queue-thumb" src="" alt="" />
+            <div class="queue-info">
+              <div class="filename">${item.file.name}</div>
+              <div class="status ${item.status}" id="status-${item.id}">${statusLabel(item.status)}</div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="prog-${item.id}" style="width:${item.progress}%"></div>
+              </div>
+            </div>
+            ${item.status === 'pending'
+              ? `<button class="remove-btn" data-id="${item.id}">✕</button>`
+              : '<span></span>'}
+          </div>`
+        ).join('');
+
+      fileQueue.forEach(item => {
+        const img = document.querySelector(`#qi-${item.id} .queue-thumb`);
+        if (!img) return;
+        const reader = new FileReader();
+        reader.onload = e => { img.src = e.target.result; };
+        reader.readAsDataURL(item.file);
+      });
+
+      container.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          fileQueue = fileQueue.filter(f => f.id !== btn.dataset.id);
+          renderQueue();
+          document.getElementById('upload-btn').style.display = fileQueue.length ? 'block' : 'none';
+        });
+      });
+    }
+
+    function statusLabel(s) {
+      return s === 'uploading' ? 'Uploading…' : s === 'done' ? '✓ Uploaded' : s === 'fail' ? '✗ Failed' : 'Ready';
+    }
+
+    function setStatus(id, status, progress) {
+      const el = document.getElementById(`status-${id}`);
+      if (el) { el.className = `status ${status}`; el.textContent = statusLabel(status); }
+      if (progress !== undefined) {
+        const bar = document.getElementById(`prog-${id}`);
+        if (bar) bar.style.width = progress + '%';
+      }
+    }
+
+    // ── UPLOAD TO CLOUDINARY THEN SAVE URL TO FIRESTORE ──
+    document.getElementById('upload-btn').addEventListener('click', uploadAll);
+
+    async function uploadAll() {
+      const pending = fileQueue.filter(f => f.status === 'pending');
+      if (!pending.length) return;
+      document.getElementById('upload-btn').style.display = 'none';
+
+      for (const item of pending) {
+        item.status = 'uploading';
+        setStatus(item.id, 'uploading', 0);
+
+        try {
+          const url = await uploadToCloudinary(item);
+
+          await addDoc(collection(db, 'gallery'), {
+            url,
+            uploadedAt: serverTimestamp()
+          });
+
+          item.status = 'done';
+          setStatus(item.id, 'done', 100);
+        } catch (err) {
+          item.status = 'fail';
+          setStatus(item.id, 'fail');
+          console.error('Upload error:', err);
+        }
+      }
+
+      showToast('Gallery updated ✦');
+      fileQueue = fileQueue.filter(f => f.status !== 'done');
+      setTimeout(() => { renderQueue(); loadManageGallery(); }, 800);
+    }
+
+    function uploadToCloudinary(item) {
+      return new Promise((resolve, reject) => {
+        const fd = new FormData();
+        fd.append('file', item.file);
+        fd.append('upload_preset', CLOUDINARY_PRESET);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`);
+
+        xhr.upload.onprogress = e => {
+          if (e.lengthComputable) {
+            const pct = Math.round((e.loaded / e.total) * 100);
+            item.progress = pct;
+            setStatus(item.id, 'uploading', pct);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const res = JSON.parse(xhr.responseText);
+            resolve(res.secure_url);
+          } else {
+            reject(new Error(`Cloudinary error: ${xhr.status}`));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error('Network error'));
+        xhr.send(fd);
+      });
+    }
+
+    // ── LOAD GALLERY FOR MANAGEMENT ──
+    async function loadManageGallery() {
+      const grid = document.getElementById('manage-grid');
+      grid.innerHTML = '<div class="empty-msg">Loading…</div>';
+      try {
+        const q    = query(collection(db, 'gallery'), orderBy('uploadedAt', 'desc'));
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          grid.innerHTML = '<div class="empty-msg">No images yet — upload some!</div>';
+          return;
+        }
+
+        grid.innerHTML = snap.docs.map(d => `
+          <div class="manage-item">
+            <img src="${d.data().url}" alt="" loading="lazy" />
+            <button class="del-btn" data-docid="${d.id}">Remove</button>
+          </div>`
+        ).join('');
+
+        grid.querySelectorAll('.del-btn').forEach(btn => {
+          btn.addEventListener('click', () => deleteImage(btn.dataset.docid));
+        });
+      } catch (err) {
+        grid.innerHTML = '<div class="empty-msg">Could not load gallery.</div>';
+        console.error(err);
+      }
+    }
+
+    async function deleteImage(docId) {
+      if (!confirm('Remove this image from the gallery?')) return;
+      try {
+        await deleteDoc(doc(db, 'gallery', docId));
+        showToast('Image removed');
+        loadManageGallery();
+      } catch (err) {
+        showToast('Error removing image');
+        console.error(err);
+      }
+    }
+
+    // ── TOAST ──
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>
