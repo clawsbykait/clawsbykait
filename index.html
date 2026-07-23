@@ -18,7 +18,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 3rem 2rem 0;
+      padding: 5rem 2rem 0;
       overflow: hidden;
     }
 
@@ -67,10 +67,7 @@
       width: 100%;
       display: block;
       pointer-events: none;
-      mix-blend-mode: screen;
-      opacity: 0.65;
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
+      opacity: 0.9;
     }
 
     /* GALLERY */
@@ -164,7 +161,7 @@
       <a href="book/" class="btn">Book an Appointment</a>
       <a href="services/" class="btn btn-ghost">View Services</a>
     </div>
-    <div style="height: 280px; pointer-events: none; flex-shrink: 0;"></div>
+    <div style="height: clamp(160px, 20vw, 260px); pointer-events: none; flex-shrink: 0;"></div>
 
     <img class="hero-drip" src="assets/cathedral.png" alt="" aria-hidden="true" />
   </section>
