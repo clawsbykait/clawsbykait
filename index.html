@@ -62,13 +62,14 @@
 
     .hero-drip {
       position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 0;
+      left: 0;
       width: 100%;
-      max-width: 900px;
-      opacity: 0.08;
+      height: 60%;
+      object-fit: cover;
+      object-position: center bottom;
       pointer-events: none;
+      opacity: 0.85;
     }
 
     /* GALLERY */
@@ -163,16 +164,7 @@
       <a href="services/" class="btn btn-ghost">View Services</a>
     </div>
 
-    <svg class="hero-drip" viewBox="0 0 800 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0 Q100 40 200 10 Q300 -10 400 30 Q500 60 600 20 Q700 -10 800 20 L800 80 L0 80 Z" fill="#e8e3da"/>
-      <circle cx="180" cy="50" r="4" fill="#e8e3da"/>
-      <circle cx="182" cy="62" r="2.5" fill="#e8e3da"/>
-      <circle cx="183" cy="70" r="1.5" fill="#e8e3da"/>
-      <circle cx="450" cy="55" r="3" fill="#e8e3da"/>
-      <circle cx="451" cy="65" r="2" fill="#e8e3da"/>
-      <circle cx="620" cy="40" r="3.5" fill="#e8e3da"/>
-      <circle cx="621" cy="52" r="2" fill="#e8e3da"/>
-    </svg>
+    <img class="hero-drip" src="assets/cathedral.png" alt="" aria-hidden="true" />
   </section>
 
   <section id="gallery">
