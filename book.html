@@ -375,6 +375,7 @@
       btn.disabled = true;
 
       try {
+        // Save to Firestore
         await addDoc(collection(db, 'bookings'), {
           name, phone, email, service,
           day: selectedDay,
@@ -382,6 +383,22 @@
           notes: notes || null,
           status: 'pending',
           submittedAt: serverTimestamp()
+        });
+
+        // Email Kait via Formspree
+        await fetch('https://formspree.io/f/xqerdgdq', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `New Booking Request — ${name}`,
+            Name:     name,
+            Phone:    phone,
+            Email:    email,
+            Service:  service,
+            Day:      selectedDay,
+            Time:     selectedTime,
+            Notes:    notes || 'None'
+          })
         });
 
         document.getElementById('booking-form').style.display = 'none';
