@@ -40,6 +40,9 @@ header {
   background: rgba(10,10,10,0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  /* respect iOS status bar */
+  padding-top: env(safe-area-inset-top);
+  height: calc(58px + env(safe-area-inset-top));
 }
 
 .site-name {
@@ -51,6 +54,8 @@ header {
   flex-shrink: 0;
   letter-spacing: 0.01em;
   z-index: 101;
+  /* push down past status bar */
+  margin-top: env(safe-area-inset-top);
 }
 
 /* ── NAV ── */
@@ -76,16 +81,17 @@ nav a.active {
   padding-bottom: calc(0.35rem - 1px);
 }
 
-/* hamburger */
+/* ── HAMBURGER ── */
 .nav-toggle {
   display: none;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.25rem;
+  padding: 0.5rem;
   z-index: 101;
   flex-direction: column;
   gap: 5px;
+  margin-top: env(safe-area-inset-top);
 }
 
 .nav-toggle span {
@@ -259,37 +265,53 @@ footer a:hover { opacity: 1; }
 
 /* ── MOBILE ── */
 @media (max-width: 700px) {
-  header { padding: 0 1.25rem; }
+  header {
+    padding: 0 1.25rem;
+    padding-top: env(safe-area-inset-top);
+    height: calc(58px + env(safe-area-inset-top));
+  }
+
   .page-hero { padding: 2.5rem 1.5rem 2rem; }
   .content { padding: 2rem 1.5rem; }
 
   .nav-toggle { display: flex; }
 
+  /* hide desktop nav links, show as dropdown */
   nav {
     position: fixed;
-    top: 58px;
+    top: calc(58px + env(safe-area-inset-top));
     left: 0;
     right: 0;
-    background: rgba(10,10,10,0.98);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(10,10,10,0.99);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     flex-direction: column;
     align-items: stretch;
     border-bottom: 0.5px solid rgba(232,227,218,0.08);
     transform: translateY(-110%);
     transition: transform 0.28s ease;
     z-index: 99;
+    /* hide all links by default on mobile until toggled */
+    visibility: hidden;
   }
 
-  nav.open { transform: translateY(0); }
+  nav.open {
+    transform: translateY(0);
+    visibility: visible;
+  }
 
   nav a {
     padding: 1rem 1.5rem;
     font-size: 0.75rem;
     border-bottom: 0.5px solid rgba(232,227,218,0.05);
+    display: block;
   }
 
-  nav a.active { border-bottom: 0.5px solid rgba(232,227,218,0.05); border-left: 2px solid var(--rose); padding-left: calc(1.5rem - 2px); }
+  nav a.active {
+    border-bottom: 0.5px solid rgba(232,227,218,0.05);
+    border-left: 2px solid var(--rose);
+    padding-left: calc(1.5rem - 2px);
+  }
 
   nav a:last-child { border-bottom: none; }
 }
