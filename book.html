@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book — Claws by Kait</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    .booking-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* LEFT PANEL - info */
+    .booking-info {}
+
+    .hours-card {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hours-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--bone);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 0.5px solid rgba(232,227,218,0.08);
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.55rem 0;
+      border-bottom: 0.5px solid rgba(232,227,218,0.05);
+      font-size: 0.88rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { color: var(--silver); letter-spacing: 0.06em; }
+    .hours-slots { color: var(--bone-dim); text-align: right; }
+
+    .policy-note {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      border-left: 2px solid var(--rose);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .policy-note p {
+      font-size: 0.85rem;
+      color: var(--silver);
+      line-height: 1.8;
+    }
+
+    /* RIGHT PANEL - form */
+    .booking-form-wrap {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      padding: 2.5rem;
+    }
+
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--bone);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid rgba(232,227,218,0.08);
+    }
+
+    .form-row { margin-bottom: 0; }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+
+    .slot-btn {
+      background: var(--ink);
+      border: 0.5px solid rgba(232,227,218,0.12);
+      color: var(--bone-dim);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 0.65rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .slot-btn:hover { border-color: var(--rose); color: var(--bone); }
+    .slot-btn.selected { background: var(--rose); border-color: var(--rose); color: var(--bone); }
+    .slot-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .date-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .day-chip {
+      background: var(--ink);
+      border: 0.5px solid rgba(232,227,218,0.12);
+      color: var(--bone-dim);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .day-chip:hover { border-color: var(--rose); color: var(--bone); }
+    .day-chip.selected { background: var(--rose); border-color: var(--rose); color: var(--bone); }
+
+    /* success state */
+    .success-box {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .success-box.show { display: block; }
+    .success-glyph { font-size: 2.5rem; color: var(--rose); margin-bottom: 1rem; }
+    .success-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--bone);
+      margin-bottom: 0.75rem;
+    }
+    .success-box p { font-size: 0.9rem; color: var(--silver); line-height: 1.8; }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .error-msg {
+      font-size: 0.78rem;
+      color: var(--danger);
+      margin-top: -0.75rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+
+    @media (max-width: 800px) {
+      .booking-wrap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="site-name">Claws by Kait</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="book.html" class="active">Book</a>
+      <a href="policies.html">Policies</a>
+      <a href="connect.html">Connect</a>
+    </nav>
+  </header>
+
+  <div class="page">
+    <div class="page-hero fade-in">
+      <p class="section-label">Reserve Your Slot</p>
+      <h1 class="page-title">Book</h1>
+      <p class="page-sub">Submit a request and Kait will confirm your appointment within 24 hours.</p>
+    </div>
+
+    <div class="content">
+      <div class="booking-wrap">
+
+        <!-- LEFT: Info -->
+        <div class="booking-info fade-in">
+          <div class="hours-card">
+            <h3>Available Hours</h3>
+            <div class="hours-row">
+              <span class="hours-day">Monday</span>
+              <span class="hours-slots">10am · 2pm · 6pm</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Tuesday</span>
+              <span class="hours-slots">10am · 2pm · 6pm</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Wednesday</span>
+              <span class="hours-slots">10am</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Thursday</span>
+              <span class="hours-slots">10am</span>
+            </div>
+            <div class="hours-row">
+              <span class="hours-day">Fri · Sat · Sun</span>
+              <span class="hours-slots" style="color:var(--silver);">Unavailable</span>
+            </div>
+          </div>
+
+          <div class="policy-note">
+            <p>All bookings are <strong style="color:var(--bone-dim);">requests</strong> — not confirmed until Kait approves. You'll receive a confirmation email once your appointment is locked in.</p>
+            <p style="margin-top:0.75rem;">For design references or pricing questions, send a DM on Instagram before booking.</p>
+          </div>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="booking-form-wrap fade-in">
+          <h2 class="form-title">Request an Appointment</h2>
+
+          <div id="booking-form">
+            <!-- Name -->
+            <label class="field-label" for="name">Full Name</label>
+            <input class="field-input" type="text" id="name" placeholder="Your name" />
+
+            <!-- Phone -->
+            <label class="field-label" for="phone">Phone Number</label>
+            <input class="field-input" type="tel" id="phone" placeholder="(916) 555-0000" />
+
+            <!-- Email -->
+            <label class="field-label" for="email">Email Address</label>
+            <input class="field-input" type="email" id="email" placeholder="you@example.com" />
+
+            <!-- Service -->
+            <label class="field-label" for="service">Service</label>
+            <select class="field-select" id="service">
+              <option value="" disabled selected>Select a service…</option>
+              <optgroup label="Services">
+                <option>Regular Manicure — $35</option>
+                <option>Gel X Full Set — $45</option>
+                <option>Acrylic Full Set — $50</option>
+                <option>Acrylic Fill — $45</option>
+                <option>Hard Gel Full Set — $50</option>
+                <option>Hard Gel Fill — $45</option>
+                <option>Soak Off Only — $25</option>
+                <option>Pedicure — $55</option>
+              </optgroup>
+              <optgroup label="Nail Art Add-Ons">
+                <option>+ Nail Art Tier 1 — $10</option>
+                <option>+ Nail Art Tier 2 — $25</option>
+              </optgroup>
+            </select>
+
+            <!-- Day picker -->
+            <label class="field-label">Preferred Day</label>
+            <div class="date-row" id="day-picker">
+              <div class="day-chip" data-day="Monday">Mon</div>
+              <div class="day-chip" data-day="Tuesday">Tue</div>
+              <div class="day-chip" data-day="Wednesday">Wed</div>
+              <div class="day-chip" data-day="Thursday">Thu</div>
+            </div>
+
+            <!-- Time picker -->
+            <label class="field-label">Preferred Time</label>
+            <div class="slot-grid" id="slot-picker">
+              <button class="slot-btn" data-time="10:00 AM" disabled>10:00 AM</button>
+              <button class="slot-btn" data-time="2:00 PM" disabled>2:00 PM</button>
+              <button class="slot-btn" data-time="6:00 PM" disabled>6:00 PM</button>
+            </div>
+            <p class="error-msg" id="slot-error">Please select a day and time.</p>
+
+            <!-- Notes -->
+            <label class="field-label" for="notes">Notes <span style="color:var(--silver);font-size:0.62rem;letter-spacing:0.08em;">(optional)</span></label>
+            <textarea class="field-textarea" id="notes" placeholder="Design inspiration, nail length, questions for Kait…"></textarea>
+
+            <p class="error-msg" id="form-error">Please fill in all required fields.</p>
+
+            <button class="btn submit-btn" id="submit-btn">Submit Request</button>
+          </div>
+
+          <!-- Success -->
+          <div class="success-box" id="success-box">
+            <div class="success-glyph">✦</div>
+            <h3>Request Received</h3>
+            <p>Kait will review your request and confirm your appointment within 24 hours. Check your email for updates.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Claws by Kait &nbsp;·&nbsp; Sacramento, CA</span>
+    <a href="admin/index.html">✦</a>
+  </footer>
+
+  <script type="module">
+    import { initializeApp }   from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
+    import { getFirestore, collection, addDoc, serverTimestamp }
+                               from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
+    import { FIREBASE_CONFIG } from './firebase-config.js';
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const app = initializeApp(FIREBASE_CONFIG);
+    const db  = getFirestore(app);
+
+    // ── SLOT AVAILABILITY ──
+    const slotsByDay = {
+      Monday:    ['10:00 AM', '2:00 PM', '6:00 PM'],
+      Tuesday:   ['10:00 AM', '2:00 PM', '6:00 PM'],
+      Wednesday: ['10:00 AM'],
+      Thursday:  ['10:00 AM'],
+    };
+
+    let selectedDay  = null;
+    let selectedTime = null;
+
+    // Day chips
+    document.querySelectorAll('.day-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        selectedDay  = chip.dataset.day;
+        selectedTime = null;
+        updateSlots();
+      });
+    });
+
+    function updateSlots() {
+      const slots    = slotsByDay[selectedDay] || [];
+      const allTimes = ['10:00 AM', '2:00 PM', '6:00 PM'];
+      document.querySelectorAll('.slot-btn').forEach(btn => {
+        const available = slots.includes(btn.dataset.time);
+        btn.disabled = !available;
+        btn.classList.remove('selected');
+        btn.style.opacity = available ? '1' : '0.25';
+      });
+    }
+
+    // Time slots
+    document.querySelectorAll('.slot-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedTime = btn.dataset.time;
+      });
+    });
+
+    // ── SUBMIT ──
+    document.getElementById('submit-btn').addEventListener('click', async () => {
+      const name    = document.getElementById('name').value.trim();
+      const phone   = document.getElementById('phone').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const service = document.getElementById('service').value;
+      const notes   = document.getElementById('notes').value.trim();
+
+      document.getElementById('form-error').classList.remove('show');
+      document.getElementById('slot-error').classList.remove('show');
+
+      if (!name || !phone || !email || !service) {
+        document.getElementById('form-error').classList.add('show');
+        return;
+      }
+
+      if (!selectedDay || !selectedTime) {
+        document.getElementById('slot-error').classList.add('show');
+        return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+
+      try {
+        await addDoc(collection(db, 'bookings'), {
+          name, phone, email, service,
+          day: selectedDay,
+          time: selectedTime,
+          notes: notes || null,
+          status: 'pending',
+          submittedAt: serverTimestamp()
+        });
+
+        document.getElementById('booking-form').style.display = 'none';
+        document.getElementById('success-box').classList.add('show');
+      } catch (err) {
+        console.error(err);
+        btn.textContent = 'Submit Request';
+        btn.disabled = false;
+        document.getElementById('form-error').textContent = 'Something went wrong. Please try again.';
+        document.getElementById('form-error').classList.add('show');
+      }
+    });
+  </script>
+</body>
+</html>

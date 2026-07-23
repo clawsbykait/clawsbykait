@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connect — Claws by Kait</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    .connect-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+
+    .connect-card {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      text-decoration: none;
+      transition: border-color 0.25s;
+    }
+
+    a.connect-card:hover {
+      border-color: rgba(232,227,218,0.22);
+    }
+
+    .connect-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .connect-platform {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose);
+    }
+
+    .connect-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--bone);
+    }
+
+    .connect-desc {
+      font-size: 0.85rem;
+      color: var(--silver);
+      line-height: 1.7;
+    }
+
+    .connect-action {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      border-bottom: 0.5px solid var(--rose);
+      padding-bottom: 2px;
+      margin-top: auto;
+      align-self: flex-start;
+      transition: color 0.2s;
+    }
+
+    a.connect-card:hover .connect-action { color: var(--bone); }
+
+    .coming-soon-card {
+      opacity: 0.5;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .soon-badge {
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--silver);
+      border: 0.5px dashed rgba(232,227,218,0.2);
+      padding: 3px 8px;
+      display: inline-block;
+    }
+
+    /* Email card full width */
+    .email-card {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      padding: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .email-left {}
+    .email-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 0.5rem;
+    }
+    .email-address {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--bone);
+    }
+
+    .divider-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin: 3rem 0 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .connect-grid { grid-template-columns: 1fr; }
+      .email-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="site-name">Claws by Kait</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="book.html">Book</a>
+      <a href="policies.html">Policies</a>
+      <a href="connect.html" class="active">Connect</a>
+    </nav>
+  </header>
+
+  <div class="page">
+    <div class="page-hero fade-in">
+      <p class="section-label">Stay in the Loop</p>
+      <h1 class="page-title">Connect</h1>
+      <p class="page-sub">Follow along, leave a review, or reach out directly.</p>
+    </div>
+
+    <div class="content">
+
+      <!-- Socials -->
+      <p class="divider-label fade-in">Socials</p>
+      <div class="connect-grid fade-in">
+
+        <a class="connect-card" href="https://instagram.com/clawsbykait" target="_blank" rel="noopener">
+          <div class="connect-icon">✦</div>
+          <div>
+            <p class="connect-platform">Instagram</p>
+            <p class="connect-name">@clawsbykait</p>
+          </div>
+          <p class="connect-desc">Gallery updates, inspo, behind-the-scenes, and the fastest way to reach Kait for questions before booking.</p>
+          <span class="connect-action">Follow on Instagram →</span>
+        </a>
+
+        <div class="connect-card coming-soon-card">
+          <div class="connect-icon">✦</div>
+          <div>
+            <p class="connect-platform">TikTok</p>
+            <p class="connect-name">Coming Soon</p>
+          </div>
+          <p class="connect-desc">Nail art process videos and more on the way.</p>
+          <span class="soon-badge">Not yet active</span>
+        </div>
+
+      </div>
+
+      <!-- Reviews -->
+      <p class="divider-label fade-in" style="margin-top:3rem;">Reviews</p>
+      <div class="connect-grid fade-in">
+
+        <div class="connect-card coming-soon-card">
+          <div class="connect-icon">✦</div>
+          <div>
+            <p class="connect-platform">Yelp</p>
+            <p class="connect-name">Claws by Kait</p>
+          </div>
+          <p class="connect-desc">Yelp page coming soon. If you've been a client, your review means the world.</p>
+          <span class="soon-badge">Page coming soon</span>
+        </div>
+
+        <a class="connect-card" href="https://g.page/r/REPLACE_WITH_GOOGLE_REVIEW_LINK" target="_blank" rel="noopener">
+          <div class="connect-icon">✦</div>
+          <div>
+            <p class="connect-platform">Google</p>
+            <p class="connect-name">Leave a Review</p>
+          </div>
+          <p class="connect-desc">Had a great experience? A Google review helps other clients find Kait and supports the business.</p>
+          <span class="connect-action">Review on Google →</span>
+        </a>
+
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Email -->
+      <div class="email-card fade-in">
+        <div class="email-left">
+          <p class="email-label">Direct Email</p>
+          <p class="email-address">claws.by.kait916@gmail.com</p>
+        </div>
+        <a href="mailto:claws.by.kait916@gmail.com" class="btn">Send an Email</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Claws by Kait &nbsp;·&nbsp; Sacramento, CA</span>
+    <a href="admin/index.html">✦</a>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Claws by Kait</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+
+    .service-card {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      padding: 2.5rem;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--bone);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid rgba(232,227,218,0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-title span {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .service-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.85rem 0;
+      border-bottom: 0.5px solid rgba(232,227,218,0.06);
+    }
+
+    .service-row:last-child { border-bottom: none; }
+
+    .service-name {
+      font-size: 0.95rem;
+      color: var(--bone-dim);
+      letter-spacing: 0.02em;
+    }
+
+    .service-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--bone);
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    /* Nail art tiers */
+    .tier-card {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      padding: 2.5rem;
+      margin-bottom: 2px;
+    }
+
+    .tier {
+      padding: 1.5rem 0;
+      border-bottom: 0.5px solid rgba(232,227,218,0.08);
+    }
+    .tier:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .tier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.75rem;
+    }
+
+    .tier-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: var(--bone);
+    }
+
+    .tier-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--rose-light);
+    }
+
+    .tier-includes {
+      font-size: 0.85rem;
+      color: var(--silver);
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+    }
+
+    /* Note box */
+    .note-box {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      border-left: 2px solid var(--rose);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2px;
+    }
+
+    .note-box p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--bone-dim);
+      line-height: 1.8;
+    }
+
+    .note-box p + p { margin-top: 0.5rem; }
+
+    .includes-note {
+      background: var(--panel);
+      border: 0.5px solid rgba(232,227,218,0.08);
+      padding: 1.75rem 2.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .includes-note .glyph {
+      font-size: 1.2rem;
+      color: var(--rose);
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .includes-note p {
+      font-size: 0.88rem;
+      color: var(--silver);
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+
+    .book-cta {
+      text-align: center;
+      padding: 4rem 2rem;
+      border-top: 0.5px solid rgba(232,227,218,0.08);
+    }
+
+    .book-cta p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--bone-dim);
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 700px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="site-name">Claws by Kait</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="book.html">Book</a>
+      <a href="policies.html">Policies</a>
+      <a href="connect.html">Connect</a>
+    </nav>
+  </header>
+
+  <div class="page">
+    <div class="page-hero fade-in">
+      <p class="section-label">What Kait Offers</p>
+      <h1 class="page-title">Services</h1>
+      <p class="page-sub">Every set includes cuticle care, gel polish, and massage.</p>
+    </div>
+
+    <div class="content">
+
+      <!-- Services + Nail Art grid -->
+      <div class="services-grid fade-in">
+
+        <!-- Services -->
+        <div class="service-card">
+          <h2 class="card-title">Services <span>Base Pricing</span></h2>
+          <div class="service-row">
+            <span class="service-name">Regular Manicure</span>
+            <span class="service-price">$35</span>
+          </div>
+          <div class="service-row">
+            <span class="service-name">Gel X Full Set</span>
+            <span class="service-price">$45</span>
+          </div>
+          <div class="service-row">
+            <span class="service-name">Acrylic Full Set</span>
+            <span class="service-price">$50</span>
+          </div>
+          <div class="service-row">
+            <span class="service-name">Acrylic Fill</span>
+            <span class="service-price">$45</span>
+          </div>
+          <div class="service-row">
+            <span class="service-name">Hard Gel Full Set</span>
+            <span class="service-price">$50</span>
+          </div>
+          <div class="service-row">
+            <span class="service-name">Hard Gel Fill</span>
+            <span class="service-price">$45</span>
+          </div>
+          <div class="service-row">
+            <span class="service-name">Soak Off Only</span>
+            <span class="service-price">$25</span>
+          </div>
+          <div class="service-row">
+            <span class="service-name">Pedicure</span>
+            <span class="service-price">$55</span>
+          </div>
+        </div>
+
+        <!-- Nail Art -->
+        <div class="service-card">
+          <h2 class="card-title">Nail Art <span>Add-On Pricing</span></h2>
+          <div class="tier">
+            <div class="tier-header">
+              <span class="tier-name">Tier 1</span>
+              <span class="tier-price">+$10</span>
+            </div>
+            <p class="tier-includes">French, Stickers, Cat Eye Polish, Rhinestones (minimal design), 2 feature nails</p>
+          </div>
+          <div class="tier">
+            <div class="tier-header">
+              <span class="tier-name">Tier 2</span>
+              <span class="tier-price">+$25</span>
+            </div>
+            <p class="tier-includes">Any Tier 1 option, Chrome, Rhinestones (Maximalist design or "Junk"), Charms, unlimited nail design</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="note-box fade-in">
+        <p>You may send in a design reference for an accurate estimate prior to booking.</p>
+        <p>Regular polish available for pedicures only, by request. Nail art not available for regular polish pedicures.</p>
+      </div>
+
+      <!-- What's included -->
+      <div class="includes-note fade-in">
+        <span class="glyph">✦</span>
+        <p>All services include cuticle care, gel polish, and massage. Prices listed are starting rates — final pricing may vary based on length, design complexity, and add-ons. When in doubt, reach out before booking.</p>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Book CTA -->
+      <div class="book-cta fade-in">
+        <p>Ready to manifest your dream set?</p>
+        <a href="book.html" class="btn">Book an Appointment</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Claws by Kait &nbsp;·&nbsp; Sacramento, CA</span>
+    <a href="admin/index.html">✦</a>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
