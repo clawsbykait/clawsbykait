@@ -62,13 +62,21 @@
 
     .hero-drip {
       position: absolute;
-      bottom: -1px;
+      bottom: 0;
       left: 0;
+      z-index: 0;
       width: 100%;
+      height: clamp(270px, 38vw, 560px);
+      object-fit: cover;
+      object-position: center bottom;
       display: block;
       pointer-events: none;
       opacity: 0.9;
     }
+
+    /* keep the text and buttons above the skyline */
+    .hero > *:not(.hero-drip) { position: relative; z-index: 1; }
+    .hero-title, .hero-sub { text-shadow: 0 2px 24px rgba(10,10,10,0.9); }
 
     /* GALLERY */
     #gallery {
@@ -161,9 +169,9 @@
       <a href="book/" class="btn">Book an Appointment</a>
       <a href="services/" class="btn btn-ghost">View Services</a>
     </div>
-    <div style="height: clamp(160px, 20vw, 260px); pointer-events: none; flex-shrink: 0;"></div>
+    <div style="height: clamp(170px, 26vw, 400px); pointer-events: none; flex-shrink: 0;"></div>
 
-    <img class="hero-drip" src="assets/cathedral.png" alt="" aria-hidden="true" />
+    <img class="hero-drip" src="assets/cathedral.webp" alt="" aria-hidden="true" />
   </section>
 
   <section id="gallery">
